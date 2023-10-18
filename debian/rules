@@ -1,4 +1,22 @@
 #!/usr/bin/make -f
+# -*- makefile -*-
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+include /usr/share/dpkg/pkg-info.mk
+
+LLHTTPVERSION=$(shell pkgjs-pjson llhttp version)
 
 %:
 	dh $@
+
+override_dh_auto_test:
+	# autopkgtest only
+
+override_dh_install:
+	dh_install
+	rm -f debian/node-undici/usr/share/nodejs/undici/lib/fetch/LICENSE
+
+override_dh_gencontrol:
+	dh_gencontrol -pnode-undici -- -v$(DEB_VERSION)
+	dh_gencontrol -pnode-llhttp -- -v$(LLHTTPVERSION)~$(DEB_VERSION) -Vllhttp:Version=$(LLHTTPVERSION)

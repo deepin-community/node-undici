@@ -1,0 +1,27 @@
+Description: drop simd call
+Author: Yadd <yadd@debian.org>
+Forwarded: not-needed
+Last-Update: 2023-07-09
+
+--- a/lib/client.js
++++ b/lib/client.js
+@@ -491,18 +491,7 @@
+ async function lazyllhttp () {
+   const llhttpWasmData = process.env.JEST_WORKER_ID ? require('./llhttp/llhttp-wasm.js') : undefined
+ 
+-  let mod
+-  try {
+-    mod = await WebAssembly.compile(Buffer.from(require('./llhttp/llhttp_simd-wasm.js'), 'base64'))
+-  } catch (e) {
+-    /* istanbul ignore next */
+-
+-    // We could check if the error was caused by the simd option not
+-    // being enabled, but the occurring of this other error
+-    // * https://github.com/emscripten-core/emscripten/issues/11495
+-    // got me to remove that check to avoid breaking Node 12.
+-    mod = await WebAssembly.compile(Buffer.from(llhttpWasmData || require('./llhttp/llhttp-wasm.js'), 'base64'))
+-  }
++  const mod = await WebAssembly.compile(Buffer.from(llhttpWasmData || require('./llhttp/llhttp-wasm.js'), 'base64'))
+ 
+   return await WebAssembly.instantiate(mod, {
+     env: {

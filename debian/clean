@@ -1,0 +1,10 @@
+deps/
+lib/llhttp/llhttp.wasm
+lib/llhttp/llhttp-wasm*
+llhttp/build/
+llhttp/lib/
+llhttp/release/
+llparse/lib/
+llparse-builder/lib/
+llparse-frontend/lib/
+undici-fetch.js

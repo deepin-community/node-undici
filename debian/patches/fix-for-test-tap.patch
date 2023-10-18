@@ -1,0 +1,56 @@
+Description: fix tap test
+Author: Yadd <yadd@debian.org>
+Forwarded: no
+Last-Update: 2022-05-17
+
+--- a/test/unix.js
++++ b/test/unix.js
+@@ -94,48 +94,4 @@
+     })
+   })
+ 
+-  test('https get with tls opts', (t) => {
+-    t.plan(6)
+-
+-    const server = https.createServer(pem, (req, res) => {
+-      t.equal('/', req.url)
+-      t.equal('GET', req.method)
+-      res.setHeader('content-type', 'text/plain')
+-      res.end('hello')
+-    })
+-    t.teardown(server.close.bind(server))
+-
+-    try {
+-      fs.unlinkSync('/var/tmp/test3.sock')
+-    } catch (err) {
+-
+-    }
+-
+-    server.listen('/var/tmp/test8.sock', () => {
+-      const client = new Client({
+-        hostname: 'localhost',
+-        protocol: 'https:'
+-      }, {
+-        socketPath: '/var/tmp/test8.sock',
+-        tls: {
+-          rejectUnauthorized: false
+-        }
+-      })
+-      t.teardown(client.close.bind(client))
+-
+-      client.request({ path: '/', method: 'GET' }, (err, data) => {
+-        t.error(err)
+-        const { statusCode, headers, body } = data
+-        t.equal(statusCode, 200)
+-        t.equal(headers['content-type'], 'text/plain')
+-        const bufs = []
+-        body.on('data', (buf) => {
+-          bufs.push(buf)
+-        })
+-        body.on('end', () => {
+-          t.equal('hello', Buffer.concat(bufs).toString('utf8'))
+-        })
+-      })
+-    })
+-  })
+ }

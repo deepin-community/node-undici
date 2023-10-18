@@ -1,0 +1,5 @@
+ts-node bin/generate.ts
+tsc
+export RELEASE=`pkgjs-pjson . version`
+WASI_ROOT=/usr ts-node bin/build_wasm.ts
+make release

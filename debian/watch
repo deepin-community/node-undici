@@ -1,0 +1,49 @@
+version=4
+opts=\
+dversionmangle=auto,\
+repacksuffix=+dfsg1,\
+filenamemangle=s/.*?(@ANY_VERSION@@ARCHIVE_EXT@)/undici-$1/ \
+ https://github.com/nodejs/undici/tags .*?@ANY_VERSION@@ARCHIVE_EXT@ group
+
+opts=\
+component=llhttp,\
+mode=git,\
+pretty=describe,\
+uversionmangle=s/^v//;s/(?:[-]|\.[a-z]).*$//,\
+dversionmangle=auto,\
+filenamemangle=s/.*?(@ANY_VERSION@@ARCHIVE_EXT@)/node-llhttp-$1/ \
+ https://github.com/nodejs/llhttp HEAD checksum
+
+opts=\
+component=llparse,\
+dversionmangle=auto,\
+filenamemangle=s/.*?(@ANY_VERSION@@ARCHIVE_EXT@)/node-llparse-$1/ \
+ https://github.com/nodejs/llparse/tags .*?@ANY_VERSION@@ARCHIVE_EXT@ checksum
+
+opts=\
+component=llparse-frontend,\
+ctype=nodejs,\
+dversionmangle=auto,\
+filenamemangle=s/.*?(\d[\d\.-]*@ARCHIVE_EXT@)/node-llparse-frontend-$1/ \
+ https://github.com/indutny/llparse-frontend/tags .*/archive.*/v?([\d\.]+).tar.gz checksum
+
+opts=\
+component=llparse-builder,\
+ctype=nodejs,\
+dversionmangle=auto,\
+filenamemangle=s/.*?(\d[\d\.-]*@ARCHIVE_EXT@)/node-llparse-builder-$1/ \
+ https://github.com/indutny/llparse-builder/tags .*/archive.*/v?([\d\.]+).tar.gz checksum
+
+opts=\
+component=binary-search,\
+ctype=nodejs,\
+dversionmangle=auto,\
+filenamemangle=s/.*?(\d[\d\.-]*@ARCHIVE_EXT@)/node-binary-search-$1/ \
+ https://github.com/darkskyapp/binary-search/tags .*/archive.*/v?([\d\.]+).tar.gz checksum
+
+opts=\
+component=fastify-busboy,\
+ctype=nodejs,\
+dversionmangle=auto,\
+filenamemangle=s/.*?(\d[\d\.-]*@ARCHIVE_EXT@)/node-busboy-$1/ \
+ https://github.com/fastify/busboy/tags .*/archive.*/v?([\d\.]+).tar.gz checksum

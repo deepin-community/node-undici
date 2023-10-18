@@ -1,0 +1,177 @@
+Description: drop SSL tests: key too short
+Author: Yadd <yadd@debian.org>
+Forwarded: no
+Last-Update: 2022-07-09
+
+--- a/test/proxy-agent.js
++++ b/test/proxy-agent.js
+@@ -467,169 +467,6 @@
+   t.end()
+ })
+ 
+-test('Proxy via HTTP to HTTPS endpoint', async (t) => {
+-  t.plan(4)
+-
+-  const server = await buildSSLServer()
+-  const proxy = await buildProxy()
+-
+-  const serverUrl = `https://localhost:${server.address().port}`
+-  const proxyUrl = `http://localhost:${proxy.address().port}`
+-  const proxyAgent = new ProxyAgent({
+-    uri: proxyUrl,
+-    requestTls: {
+-      ca: [
+-        readFileSync(join(__dirname, 'fixtures', 'ca.pem'), 'utf8')
+-      ],
+-      key: readFileSync(join(__dirname, 'fixtures', 'client-key-2048.pem'), 'utf8'),
+-      cert: readFileSync(join(__dirname, 'fixtures', 'client-crt-2048.pem'), 'utf8'),
+-      servername: 'agent1'
+-    }
+-  })
+-
+-  server.on('request', function (req, res) {
+-    t.ok(req.connection.encrypted)
+-    res.end(JSON.stringify(req.headers))
+-  })
+-
+-  server.on('secureConnection', () => {
+-    t.pass('server should be connected secured')
+-  })
+-
+-  proxy.on('secureConnection', () => {
+-    t.fail('proxy over http should not call secureConnection')
+-  })
+-
+-  proxy.on('connect', function () {
+-    t.pass('proxy should be connected')
+-  })
+-
+-  proxy.on('request', function () {
+-    t.fail('proxy should never receive requests')
+-  })
+-
+-  const data = await request(serverUrl, { dispatcher: proxyAgent })
+-  const json = await data.body.json()
+-  t.strictSame(json, {
+-    host: `localhost:${server.address().port}`,
+-    connection: 'keep-alive'
+-  })
+-
+-  server.close()
+-  proxy.close()
+-  proxyAgent.close()
+-})
+-
+-test('Proxy via HTTPS to HTTPS endpoint', async (t) => {
+-  t.plan(5)
+-  const server = await buildSSLServer()
+-  const proxy = await buildSSLProxy()
+-
+-  const serverUrl = `https://localhost:${server.address().port}`
+-  const proxyUrl = `https://localhost:${proxy.address().port}`
+-  const proxyAgent = new ProxyAgent({
+-    uri: proxyUrl,
+-    proxyTls: {
+-      ca: [
+-        readFileSync(join(__dirname, 'fixtures', 'ca.pem'), 'utf8')
+-      ],
+-      key: readFileSync(join(__dirname, 'fixtures', 'client-key-2048.pem'), 'utf8'),
+-      cert: readFileSync(join(__dirname, 'fixtures', 'client-crt-2048.pem'), 'utf8'),
+-      servername: 'agent1',
+-      rejectUnauthorized: false
+-    },
+-    requestTls: {
+-      ca: [
+-        readFileSync(join(__dirname, 'fixtures', 'ca.pem'), 'utf8')
+-      ],
+-      key: readFileSync(join(__dirname, 'fixtures', 'client-key-2048.pem'), 'utf8'),
+-      cert: readFileSync(join(__dirname, 'fixtures', 'client-crt-2048.pem'), 'utf8'),
+-      servername: 'agent1'
+-    }
+-  })
+-
+-  server.on('request', function (req, res) {
+-    t.ok(req.connection.encrypted)
+-    res.end(JSON.stringify(req.headers))
+-  })
+-
+-  server.on('secureConnection', () => {
+-    t.pass('server should be connected secured')
+-  })
+-
+-  proxy.on('secureConnection', () => {
+-    t.pass('proxy over http should call secureConnection')
+-  })
+-
+-  proxy.on('connect', function () {
+-    t.pass('proxy should be connected')
+-  })
+-
+-  proxy.on('request', function () {
+-    t.fail('proxy should never receive requests')
+-  })
+-
+-  const data = await request(serverUrl, { dispatcher: proxyAgent })
+-  const json = await data.body.json()
+-  t.strictSame(json, {
+-    host: `localhost:${server.address().port}`,
+-    connection: 'keep-alive'
+-  })
+-
+-  server.close()
+-  proxy.close()
+-  proxyAgent.close()
+-})
+-
+-test('Proxy via HTTPS to HTTP endpoint', async (t) => {
+-  t.plan(3)
+-  const server = await buildServer()
+-  const proxy = await buildSSLProxy()
+-
+-  const serverUrl = `http://localhost:${server.address().port}`
+-  const proxyUrl = `https://localhost:${proxy.address().port}`
+-  const proxyAgent = new ProxyAgent({
+-    uri: proxyUrl,
+-    proxyTls: {
+-      ca: [
+-        readFileSync(join(__dirname, 'fixtures', 'ca.pem'), 'utf8')
+-      ],
+-      key: readFileSync(join(__dirname, 'fixtures', 'client-key-2048.pem'), 'utf8'),
+-      cert: readFileSync(join(__dirname, 'fixtures', 'client-crt-2048.pem'), 'utf8'),
+-      servername: 'agent1',
+-      rejectUnauthorized: false
+-    }
+-  })
+-
+-  server.on('request', function (req, res) {
+-    t.ok(!req.connection.encrypted)
+-    res.end(JSON.stringify(req.headers))
+-  })
+-
+-  server.on('secureConnection', () => {
+-    t.fail('server is http')
+-  })
+-
+-  proxy.on('secureConnection', () => {
+-    t.pass('proxy over http should call secureConnection')
+-  })
+-
+-  proxy.on('request', function () {
+-    t.fail('proxy should never receive requests')
+-  })
+-
+-  const data = await request(serverUrl, { dispatcher: proxyAgent })
+-  const json = await data.body.json()
+-  t.strictSame(json, {
+-    host: `localhost:${server.address().port}`,
+-    connection: 'keep-alive'
+-  })
+-
+-  server.close()
+-  proxy.close()
+-  proxyAgent.close()
+-})
+-
+ test('Proxy via HTTP to HTTP endpoint', async (t) => {
+   t.plan(3)
+   const server = await buildServer()

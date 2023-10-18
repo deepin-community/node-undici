@@ -1,0 +1,29 @@
+Test-Command: /usr/share/pkg-js-autopkgtest/runner require
+Depends: @
+ , pkg-js-autopkgtest
+ , node-debug
+Restrictions: superficial, skippable,
+Features: test-name=pkg-js-autopkgtest-require
+
+Test-Command: /usr/share/pkg-js-autopkgtest/runner
+Depends: @
+ , pkg-js-autopkgtest
+ , jest
+Restrictions: allow-stderr, skippable, needs-internet
+Features: test-name=pkg-js-autopkgtest
+
+Test-Command: NETWORKTEST=1 /usr/share/pkg-js-autopkgtest/runner
+Depends: @
+ , pkg-js-autopkgtest
+ , chai
+ , mocha
+ , node-busboy
+ , node-chai-as-promised
+ , node-p-timeout
+ , node-proxy
+ , node-proxyquire
+ , node-sinon
+ , node-tap
+Restrictions: allow-stderr, skippable, needs-internet
+Features: test-name=pkg-js-autopkgtest-with-network
+Architecture: amd64, arm64, i386, ppc64el, s390x

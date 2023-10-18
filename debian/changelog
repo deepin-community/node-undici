@@ -1,5 +1,166 @@
-template-repository (1.0-1) unstable; urgency=medium
+node-undici (5.26.3+dfsg1+~cs23.10.12-2) unstable; urgency=medium
 
-  * Initial release
+  * Add wokaround to nodejs bug (unable to require node:*)
 
- -- Tsic404 <liuheng@deepin.org>  Sat, 28 Jan 2023 13:46:49 +0800
+ -- Yadd <yadd@debian.org>  Sat, 14 Oct 2023 14:49:40 +0400
+
+node-undici (5.26.3+dfsg1+~cs23.10.12-1) unstable; urgency=medium
+
+  * Embed @fastify/busboy
+  * New upstream version (Closes: #1053879, CVE-2023-45143)
+  * Unfuzz patches
+  * Fix for clang 16 (Closes: #1052723)
+  * Update copyright
+  * Update lintian overrides
+  * Update test
+
+ -- Yadd <yadd@debian.org>  Fri, 13 Oct 2023 22:03:31 +0400
+
+node-undici (5.22.1+dfsg1+~cs20.10.10.2-1) unstable; urgency=medium
+
+  [ Michael R. Crusoe ]
+  * Drop unused libsimde-dev from build dependencies
+
+  [ Yadd ]
+  * Update wasm exclusion
+  * New upstream version 5.22.1+dfsg1+~cs20.10.10.2
+  * Update test
+  * Refresh patches
+  * Update lintian overrides
+
+ -- Yadd <yadd@debian.org>  Sun, 09 Jul 2023 15:08:57 +0400
+
+node-undici (5.19.1+dfsg1+~cs20.10.9.5-2) unstable; urgency=medium
+
+  * Disable network test on armel (Closes: #1032559)
+
+ -- Yadd <yadd@debian.org>  Wed, 22 Mar 2023 10:50:17 +0400
+
+node-undici (5.19.1+dfsg1+~cs20.10.9.5-1) unstable; urgency=medium
+
+  * New upstream version (Closes: #1031418, CVE-2023-23936, CVE-2023-24807)
+  * Refresh patches
+
+ -- Yadd <yadd@debian.org>  Fri, 17 Feb 2023 07:23:05 +0400
+
+node-undici (5.15.0+dfsg1+~cs20.10.9.3-1) unstable; urgency=medium
+
+  * Update standards version to 4.6.2, no changes needed.
+  * New upstream version 5.15.0+dfsg1+~cs20.10.9.3
+
+ -- Yadd <yadd@debian.org>  Sun, 15 Jan 2023 10:04:29 +0400
+
+node-undici (5.14.0+dfsg1+~cs20.10.9-1) unstable; urgency=medium
+
+  * New upstream version 5.14.0+dfsg1+~cs20.10.9
+
+ -- Yadd <yadd@debian.org>  Sun, 11 Dec 2022 15:50:58 +0100
+
+node-undici (5.13.0+dfsg1+~cs20.10.9-1) unstable; urgency=medium
+
+  * Update lintian override info format in d/source/lintian-overrides
+    on line 2-3.
+  * New upstream version 5.13.0+dfsg1+~cs20.10.9
+
+ -- Yadd <yadd@debian.org>  Sat, 03 Dec 2022 18:14:54 +0100
+
+node-undici (5.12.0+dfsg1+~cs20.10.9-1) unstable; urgency=medium
+
+  * New upstream version 5.12.0+dfsg1+~cs20.10.9
+  * Unfuzz patches
+
+ -- Yadd <yadd@debian.org>  Fri, 28 Oct 2022 22:39:53 +0200
+
+node-undici (5.11.0+dfsg1+~cs20.10.9-1) unstable; urgency=medium
+
+  * New upstream version 5.11.0+dfsg1+~cs20.10.9
+  * Update llhttp build
+  * Unfuzz patches
+  * Add dependency to node-busboy
+
+ -- Yadd <yadd@debian.org>  Tue, 18 Oct 2022 06:25:29 +0200
+
+node-undici (5.10.0+dfsg1+~cs18.9.18.10-2) unstable; urgency=medium
+
+  * Launch tap test without timeout (may fix armel autopkgtest)
+
+ -- Yadd <yadd@debian.org>  Wed, 14 Sep 2022 10:25:18 +0200
+
+node-undici (5.10.0+dfsg1+~cs18.9.18.10-1) unstable; urgency=medium
+
+  * Enable __proto__ in test, needed here for pkg-js-autopkgtest 0.15
+  * New upstream version 5.10.0+dfsg1+~cs18.9.18.10
+
+ -- Yadd <yadd@debian.org>  Mon, 12 Sep 2022 12:01:40 +0200
+
+node-undici (5.10.0+dfsg1+~cs18.9.18.7-1) unstable; urgency=medium
+
+  * New upstream version 5.10.0+dfsg1+~cs18.9.18.7
+
+ -- Yadd <yadd@debian.org>  Tue, 30 Aug 2022 06:32:25 +0200
+
+node-undici (5.9.1+dfsg1+~cs18.9.18.1-1) unstable; urgency=medium
+
+  * New upstream version 5.9.1+dfsg1+~cs18.9.18.1
+
+ -- Yadd <yadd@debian.org>  Mon, 22 Aug 2022 09:34:29 +0200
+
+node-undici (5.8.2+dfsg1+~cs18.9.18.1-1) unstable; urgency=medium
+
+  * New upstream version 5.8.2+dfsg1+~cs18.9.18.1
+
+ -- Yadd <yadd@debian.org>  Sat, 13 Aug 2022 07:06:18 +0200
+
+node-undici (5.8.1+dfsg1+~cs18.9.18.1-1) unstable; urgency=medium
+
+  * New upstream version 5.8.1+dfsg1+~cs18.9.18.1
+  * Refresh patches
+  * Update test modules
+
+ -- Yadd <yadd@debian.org>  Mon, 08 Aug 2022 21:01:44 +0200
+
+node-undici (5.8.0+dfsg1+~cs18.9.16-2) unstable; urgency=medium
+
+  * Update typescript patch (Closes: #1016322)
+
+ -- Yadd <yadd@debian.org>  Sat, 30 Jul 2022 15:17:27 +0200
+
+node-undici (5.8.0+dfsg1+~cs18.9.16-1) unstable; urgency=medium
+
+  * Apply multi-arch hints (foreign)
+  * New upstream version 5.8.0+dfsg1+~cs18.9.16
+
+ -- Yadd <yadd@debian.org>  Tue, 19 Jul 2022 15:55:13 +0200
+
+node-undici (5.7.0+dfsg1+~cs18.9.16-3) unstable; urgency=medium
+
+  * Fix bad control field
+
+ -- Yadd <yadd@debian.org>  Thu, 14 Jul 2022 21:59:46 +0200
+
+node-undici (5.7.0+dfsg1+~cs18.9.16-2) unstable; urgency=medium
+
+  * node-llhttp: add dependencies to node-debug and node-semver
+  * Use custom autopkgtest since lld is not available on s390x arch
+
+ -- Yadd <yadd@debian.org>  Thu, 14 Jul 2022 10:46:45 +0200
+
+node-undici (5.7.0+dfsg1+~cs18.9.16-1) unstable; urgency=medium
+
+  * New upstream version 5.7.0+dfsg1+~cs18.9.16
+
+ -- Yadd <yadd@debian.org>  Thu, 14 Jul 2022 08:30:12 +0200
+
+node-undici (5.6.1+dfsg1+~cs18.9.16-1) unstable; urgency=medium
+
+  * New undici version (Closes: CVE-2022-32210)
+  * Add patch to drop SSL tests with too short key
+
+ -- Yadd <yadd@debian.org>  Sun, 10 Jul 2022 18:29:46 +0200
+
+node-undici (5.2.0+dfsg1+~cs18.9.15.10-1) unstable; urgency=medium
+
+  [ Yadd, Jérémy Lal ]
+  * Initial release (Closes: #1010470)
+
+ -- Yadd <yadd@debian.org>  Sat, 11 Jun 2022 18:54:32 +0200
