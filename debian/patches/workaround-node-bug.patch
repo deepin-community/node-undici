@@ -1,0 +1,204 @@
+Description: workaround Node.js bug
+Author: Yadd <yadd@debian.org>
+Forwarded: not-needed
+Last-Update: 2023-10-14
+
+--- a/fastify-busboy/bench/dicer/multiparty-bench-multipart-parser.js
++++ b/fastify-busboy/bench/dicer/multiparty-bench-multipart-parser.js
+@@ -1,4 +1,4 @@
+-var assert = require('node:assert'),
++var assert = require('assert'),
+     Form = require('multiparty').Form,
+     boundary = '-----------------------------168072824752491622650073',
+     mb = 100,
+--- a/fastify-busboy/bench/dicer/parted-bench-multipart-parser.js
++++ b/fastify-busboy/bench/dicer/parted-bench-multipart-parser.js
+@@ -2,7 +2,7 @@
+ // because otherwise it attempts to do some things above and beyond just parsing
+ // -- like saving to disk and whatnot
+ 
+-var assert = require('node:assert');
++var assert = require('assert');
+ var Parser = require('./parted-multipart'),
+     boundary = '-----------------------------168072824752491622650073',
+     parser = new Parser('boundary=' + boundary),
+--- a/fastify-busboy/bench/dicer/parted-multipart.js
++++ b/fastify-busboy/bench/dicer/parted-multipart.js
+@@ -4,10 +4,10 @@
+  * Copyright (c) 2011, Christopher Jeffrey. (MIT Licensed)
+  */
+ 
+-var fs = require('node:fs')
+-  , path = require('node:path')
+-  , EventEmitter = require('node:events').EventEmitter
+-  , StringDecoder = require('node:string_decoder').StringDecoder
++var fs = require('fs')
++  , path = require('path')
++  , EventEmitter = require('events').EventEmitter
++  , StringDecoder = require('string_decoder').StringDecoder
+   , set = require('qs').set
+   , each = Array.prototype.forEach;
+ 
+--- a/fastify-busboy/benchmarks/common/resultsCombinator.js
++++ b/fastify-busboy/benchmarks/common/resultsCombinator.js
+@@ -1,5 +1,5 @@
+-const fs = require('node:fs')
+-const path = require('node:path')
++const fs = require('fs')
++const path = require('path')
+ const getopts = require('getopts')
+ const systemInformation = require('systeminformation')
+ const { loadResults } = require('photofinish')
+--- a/fastify-busboy/deps/dicer/lib/Dicer.js
++++ b/fastify-busboy/deps/dicer/lib/Dicer.js
+@@ -1,7 +1,7 @@
+ 'use strict'
+ 
+-const WritableStream = require('node:stream').Writable
+-const inherits = require('node:util').inherits
++const WritableStream = require('stream').Writable
++const inherits = require('util').inherits
+ 
+ const StreamSearch = require('../../streamsearch/sbmh')
+ 
+--- a/fastify-busboy/deps/dicer/lib/HeaderParser.js
++++ b/fastify-busboy/deps/dicer/lib/HeaderParser.js
+@@ -1,7 +1,7 @@
+ 'use strict'
+ 
+-const EventEmitter = require('node:events').EventEmitter
+-const inherits = require('node:util').inherits
++const EventEmitter = require('events').EventEmitter
++const inherits = require('util').inherits
+ const getLimit = require('../../../lib/utils/getLimit')
+ 
+ const StreamSearch = require('../../streamsearch/sbmh')
+--- a/fastify-busboy/deps/dicer/lib/PartStream.js
++++ b/fastify-busboy/deps/dicer/lib/PartStream.js
+@@ -1,7 +1,7 @@
+ 'use strict'
+ 
+-const inherits = require('node:util').inherits
+-const ReadableStream = require('node:stream').Readable
++const inherits = require('util').inherits
++const ReadableStream = require('stream').Readable
+ 
+ function PartStream (opts) {
+   ReadableStream.call(this, opts)
+--- a/fastify-busboy/deps/streamsearch/sbmh.js
++++ b/fastify-busboy/deps/streamsearch/sbmh.js
+@@ -26,8 +26,8 @@
+  * Based heavily on the Streaming Boyer-Moore-Horspool C++ implementation
+  * by Hongli Lai at: https://github.com/FooBarWidget/boyer-moore-horspool
+  */
+-const EventEmitter = require('node:events').EventEmitter
+-const inherits = require('node:util').inherits
++const EventEmitter = require('events').EventEmitter
++const inherits = require('util').inherits
+ 
+ function SBMH (needle) {
+   if (typeof needle === 'string') {
+--- a/fastify-busboy/lib/main.js
++++ b/fastify-busboy/lib/main.js
+@@ -1,7 +1,7 @@
+ 'use strict'
+ 
+-const WritableStream = require('node:stream').Writable
+-const { inherits } = require('node:util')
++const WritableStream = require('stream').Writable
++const { inherits } = require('util')
+ const Dicer = require('../deps/dicer/lib/Dicer')
+ 
+ const MultipartParser = require('./types/multipart')
+--- a/fastify-busboy/lib/types/multipart.js
++++ b/fastify-busboy/lib/types/multipart.js
+@@ -7,8 +7,8 @@
+ //  * support limits.fieldNameSize
+ //     -- this will require modifications to utils.parseParams
+ 
+-const { Readable } = require('node:stream')
+-const { inherits } = require('node:util')
++const { Readable } = require('stream')
++const { inherits } = require('util')
+ 
+ const Dicer = require('../../deps/dicer/lib/Dicer')
+ 
+--- a/fastify-busboy/test/dicer-multipart-extra-trailer.spec.js
++++ b/fastify-busboy/test/dicer-multipart-extra-trailer.spec.js
+@@ -1,8 +1,8 @@
+ const Dicer = require('../deps/dicer/lib/Dicer')
+-const assert = require('node:assert')
+-const fs = require('node:fs')
+-const path = require('node:path')
+-const inspect = require('node:util').inspect
++const assert = require('assert')
++const fs = require('fs')
++const path = require('path')
++const inspect = require('util').inspect
+ 
+ const FIXTURES_ROOT = path.join(__dirname, 'fixtures/')
+ 
+--- a/fastify-busboy/test/dicer-multipart-nolisteners.spec.js
++++ b/fastify-busboy/test/dicer-multipart-nolisteners.spec.js
+@@ -1,8 +1,8 @@
+ const Dicer = require('../deps/dicer/lib/Dicer')
+-const assert = require('node:assert')
+-const fs = require('node:fs')
+-const path = require('node:path')
+-const inspect = require('node:util').inspect
++const assert = require('assert')
++const fs = require('fs')
++const path = require('path')
++const inspect = require('util').inspect
+ 
+ const FIXTURES_ROOT = path.join(__dirname, 'fixtures/')
+ 
+--- a/fastify-busboy/test/dicer-multipart.spec.js
++++ b/fastify-busboy/test/dicer-multipart.spec.js
+@@ -1,8 +1,8 @@
+ const Dicer = require('../deps/dicer/lib/Dicer')
+-const assert = require('node:assert')
+-const fs = require('node:fs')
+-const path = require('node:path')
+-const inspect = require('node:util').inspect
++const assert = require('assert')
++const fs = require('fs')
++const path = require('path')
++const inspect = require('util').inspect
+ 
+ const FIXTURES_ROOT = path.join(__dirname, 'fixtures/')
+ 
+--- a/fastify-busboy/test/multipart-stream-pause.spec.js
++++ b/fastify-busboy/test/multipart-stream-pause.spec.js
+@@ -1,4 +1,4 @@
+-const { inspect } = require('node:util')
++const { inspect } = require('util')
+ const { assert } = require('chai')
+ const Busboy = require('..')
+ 
+--- a/fastify-busboy/test/parse-params.spec.js
++++ b/fastify-busboy/test/parse-params.spec.js
+@@ -1,4 +1,4 @@
+-const { inspect } = require('node:util')
++const { inspect } = require('util')
+ const { assert } = require('chai')
+ const parseParams = require('../lib/utils/parseParams')
+ 
+--- a/fastify-busboy/test/types-multipart.spec.js
++++ b/fastify-busboy/test/types-multipart.spec.js
+@@ -1,6 +1,6 @@
+ const Busboy = require('..')
+ 
+-const { inspect } = require('node:util')
++const { inspect } = require('util')
+ const { assert } = require('chai')
+ 
+ const EMPTY_FN = function () {
+--- a/fastify-busboy/test/types-urlencoded.spec.js
++++ b/fastify-busboy/test/types-urlencoded.spec.js
+@@ -1,4 +1,4 @@
+-const { inspect } = require('node:util')
++const { inspect } = require('util')
+ const { assert } = require('chai')
+ const Busboy = require('..')
+ 

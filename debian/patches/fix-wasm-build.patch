@@ -1,0 +1,98 @@
+Description: fix wasm build
+Author: Jérémy Lal <kapouer@melix.org>
+Forwarded: not-needed
+Reviewed-By: Yadd <yadd@debian.org>
+Last-Update: 2022-07-09
+
+--- a/build/wasm.js
++++ b/build/wasm.js
+@@ -8,6 +8,7 @@
+ const WASM_SRC = resolve(__dirname, '../deps/llhttp')
+ const WASM_OUT = resolve(__dirname, '../lib/llhttp')
+ const DOCKERFILE = resolve(__dirname, './Dockerfile')
++const { CLANG } = process.env
+ 
+ let platform = process.env.WASM_PLATFORM
+ if (!platform && process.argv[2]) {
+@@ -44,13 +45,15 @@
+ writeFileSync(join(WASM_OUT, 'wasm_build_env.txt'), buildInfo)
+ 
+ // Build wasm binary
+-execSync(`clang \
+- --sysroot=/usr/share/wasi-sysroot \
++execSync(`${CLANG} \
++ -nodefaultlibs \
++ --sysroot=/usr \
+  -target wasm32-unknown-wasi \
+  -Ofast \
+  -fno-exceptions \
+  -fvisibility=hidden \
+  -mexec-model=reactor \
++ -Wl,-lc \
+  -Wl,-error-limit=0 \
+  -Wl,-O3 \
+  -Wl,--lto-O3 \
+@@ -72,14 +75,16 @@
+ )
+ 
+ // Build wasm simd binary
+-execSync(`clang \
+- --sysroot=/usr/share/wasi-sysroot \
++execSync(`${CLANG} \
++ -nodefaultlibs \
++ --sysroot=/usr \
+  -target wasm32-unknown-wasi \
+  -msimd128 \
+  -Ofast \
+  -fno-exceptions \
+  -fvisibility=hidden \
+  -mexec-model=reactor \
++ -Wl,-lc \
+  -Wl,-error-limit=0 \
+  -Wl,-O3 \
+  -Wl,--lto-O3 \
+--- a/llhttp/Makefile
++++ b/llhttp/Makefile
+@@ -81,7 +81,7 @@
+ 	git checkout main
+ 
+ generate:
+-	npx ts-node bin/generate.ts
++	ts-node bin/generate.ts
+ 
+ install: build/libllhttp.a build/libllhttp.so
+ 	$(INSTALL) -d $(DESTDIR)$(INCLUDEDIR)
+--- a/llhttp/bin/build_wasm.ts
++++ b/llhttp/bin/build_wasm.ts
+@@ -25,6 +25,7 @@
+     mkdirSync(join(WASM_SRC, 'build'));
+     process.exit(0);
+   } catch (error) {
++// @ts-ignore
+     if (error.code !== 'EEXIST') {
+       throw error;
+     }
+@@ -52,6 +53,7 @@
+ try {
+   mkdirSync(WASM_OUT);
+ } catch (error) {
++// @ts-ignore
+   if (error.code !== 'EEXIST') {
+     throw error;
+   }
+@@ -63,12 +65,14 @@
+ // Build wasm binary
+ execSync(
+   `clang \
+- --sysroot=/usr/share/wasi-sysroot \
++ -nodefaultlibs \
++ --sysroot=/usr \
+  -target wasm32-unknown-wasi \
+  -Ofast \
+  -fno-exceptions \
+  -fvisibility=hidden \
+  -mexec-model=reactor \
++ -Wl,-lc \
+  -Wl,-error-limit=0 \
+  -Wl,-O3 \
+  -Wl,--lto-O3 \

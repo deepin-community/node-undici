@@ -1,0 +1,22 @@
+mkdir -p deps/llhttp/include deps/llhttp/src
+cp llhttp/build/c/llhttp.c deps/llhttp/src/
+cp llhttp/src/native/*.c deps/llhttp/src/
+cp llhttp/build/llhttp.h deps/llhttp/include/
+
+# Reproduce this build without Node.js dependency:
+#  - original build
+#WASI_ROOT=/usr CLANG=/usr/bin/clang node build/wasm.js
+#  - direct clang call
+clang -nodefaultlibs --sysroot=/usr -target wasm32-unknown-wasi \
+	-Ofast -fno-exceptions -fvisibility=hidden \
+	-mexec-model=reactor -Wl,-lc -Wl,--error-limit=0 -Wl,-O3 \
+	-Wl,--lto-O3 -Wl,--strip-all -Wl,--allow-undefined \
+	-Wl,--export-dynamic -Wl,--export-table -Wl,--export=malloc \
+	-Wl,--export=free \
+	deps/llhttp/src/*.c \
+	-Ideps/llhttp/include \
+	-o lib/llhttp/llhttp-wasm
+echo 'module.exports = "'`perl -MMIME::Base64 -000 -ne 'print encode_base64($_)' lib/llhttp/llhttp-wasm`'";' > lib/llhttp/llhttp-wasm.js
+
+# Build bundle
+esbuild index-fetch.js --bundle --platform=node --outfile=undici-fetch.js

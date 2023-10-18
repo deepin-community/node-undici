@@ -1,0 +1,8 @@
+---
+Archive: GitHub
+Bug-Database: https://github.com/nodejs/undici/issues
+Bug-Submit: https://github.com/nodejs/undici/issues/new
+Changelog: https://github.com/nodejs/undici/tags
+Repository: https://github.com/nodejs/undici.git
+Repository-Browse: https://github.com/nodejs/undici
+Security-Contact: https://github.com/nodejs/undici/tree/HEAD/SECURITY.md

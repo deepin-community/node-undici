@@ -1,0 +1,25 @@
+Description: replace "npm run" by pkgjs-run
+Author: Yadd <yadd@debian.org>
+Forwarded: not-needed
+Last-Update: 2023-02-17
+
+--- a/llhttp/bin/build_wasm.ts
++++ b/llhttp/bin/build_wasm.ts
+@@ -43,7 +43,7 @@
+ // @ts-ignore
+     cmd += ` --user ${process.getuid()}:${process.getegid()}`;
+   }
+-  cmd += ` --mount type=bind,source=${WASM_SRC}/build,target=/home/node/llhttp/build llhttp_wasm_builder npm run wasm`;
++  cmd += ` --mount type=bind,source=${WASM_SRC}/build,target=/home/node/llhttp/build llhttp_wasm_builder pkgjs-run wasm`;
+ 
+   /* tslint:disable-next-line no-console */
+   console.log(`> ${cmd}\n\n`);
+@@ -61,7 +61,7 @@
+ }
+ 
+ // Build ts
+-execSync('npm run build', { cwd: WASM_SRC, stdio: 'inherit' });
++execSync('pkgjs-run build', { cwd: WASM_SRC, stdio: 'inherit' });
+ 
+ // Build wasm binary
+ execSync(

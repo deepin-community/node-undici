@@ -1,0 +1,9 @@
+fix-wasm-build.patch
+#simdeverywhere.patch
+disable-simd.patch
+fix-typescript.patch
+fix-for-test-tap.patch
+replace-npm-run.patch
+drop-ssl-tests.patch
+drop-simd.patch
+workaround-node-bug.patch

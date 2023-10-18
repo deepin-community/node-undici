@@ -1,0 +1,37 @@
+Description: fix SIMD
+Author: Jérémy Lal
+Forwarded: no
+Last-Update: 2022-05-16
+
+--- a/deps/llhttp/src/llhttp.c
++++ b/deps/llhttp/src/llhttp.c
+@@ -4,13 +4,7 @@
+ #include <stdint.h>
+ #include <string.h>
+ 
+-#ifdef __SSE4_2__
+- #ifdef _MSC_VER
+-  #include <nmmintrin.h>
+- #else  /* !_MSC_VER */
+-  #include <x86intrin.h>
+- #endif  /* _MSC_VER */
+-#endif  /* __SSE4_2__ */
++#include <simde/x86/sse4.2.h>
+ 
+ #ifdef _MSC_VER
+  #define ALIGN(n) _declspec(align(n))
+@@ -7678,13 +7672,7 @@
+ #include <stdint.h>
+ #include <string.h>
+ 
+-#ifdef __SSE4_2__
+- #ifdef _MSC_VER
+-  #include <nmmintrin.h>
+- #else  /* !_MSC_VER */
+-  #include <x86intrin.h>
+- #endif  /* _MSC_VER */
+-#endif  /* __SSE4_2__ */
++#include <simde/x86/sse4.2.h>
+ 
+ #ifdef _MSC_VER
+  #define ALIGN(n) _declspec(align(n))

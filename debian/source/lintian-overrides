@@ -1,0 +1,29 @@
+# False positive: data
+source-is-missing [*lib/llhttp/constants.js*]
+source-is-missing [test/wpt/tests/common/third_party/reftest-analyzer.xhtml]
+source-is-missing [test/wpt/tests/fetch/cross-origin-resource-policy/fetch-in-iframe.html]
+source-is-missing [test/wpt/tests/fetch/redirects/data.window.js]
+source-contains-prebuilt-javascript-object [*lib/llhttp/constants.js*]
+very-long-line-length-in-source-file *lib/llhttp/constants.js*
+very-long-line-length-in-source-file * [test/wpt/tests/xhr/resources/over-1-meg.txt:*]
+very-long-line-length-in-source-file * [test/wpt/tests/common/third_party/reftest-analyzer.xhtml:*]
+very-long-line-length-in-source-file * [test/wpt/tests/.taskcluster.yml:*]
+very-long-line-length-in-source-file * [test/wpt/tests/fetch/cross-origin-resource-policy/fetch-in-iframe.html:*]
+very-long-line-length-in-source-file * [test/wpt/tests/fetch/redirects/data.window.js:*]
+
+# Test files
+source-is-missing [debian/tests/test_modules/node-forge/lib/des.js]
+source-is-missing [debian/tests/test_modules/node-forge/lib/prime.worker.js]
+source-is-missing [fastify-busboy/bench/createMultipartBufferForEncodingBench.js]
+source-is-missing [fastify-busboy/test/types-multipart.spec.js]
+source-contains-browserified-javascript code fragment:* [test/wpt/tests/resources/webidl2/lib/webidl2.js]
+source-contains-prebuilt-javascript-object [debian/tests/test_modules/node-forge/lib/des.js]
+source-contains-prebuilt-javascript-object [debian/tests/test_modules/node-forge/lib/prime.worker.js]
+source-contains-prebuilt-javascript-object [fastify-busboy/bench/createMultipartBufferForEncodingBench.js]
+source-contains-prebuilt-javascript-object [fastify-busboy/test/types-multipart.spec.js]
+source-contains-prebuilt-javascript-object [test/wpt/tests/fetch/redirects/data.window.js]
+very-long-line-length-in-source-file * [fastify-busboy/test/types-multipart.spec.js:*]
+very-long-line-length-in-source-file * [fastify-busboy/bench/createMultipartBufferForEncodingBench.js:*]
+
+# Doc
+very-long-line-length-in-source-file *.md*

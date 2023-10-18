@@ -1,0 +1,9 @@
+if test "$NETWORKTEST" != ""; then
+	node -e "require('https-pem/install')"
+	mocha test/node-fetch
+	rm -f test/ca-fingerprint.js test/client-errors.js test/esm-wrapper.js test/https.js test/tls-client-cert.js test/tls-session-reuse.js test/gc.js
+	rm -f test/http2-alpn.js test/proxy-agent.js test/balanced-pool.js test/tls-session-reuse.js test/autoselectfamily.js test/http2.js test/no-strict-content-length.js
+	tap --no-timeout -R tap --no-cov `ls test/*.js test/diagnostics-channel/*.js`
+else
+	jest --ci test/jest/mock-scope.test.js test/jest/test.js
+fi

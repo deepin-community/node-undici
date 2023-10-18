@@ -1,0 +1,20 @@
+Description: disable SIMD build
+Author: Yadd <yadd@debian.org>
+Forwarded: not-needed
+Last-Update: 2022-07-09
+
+--- a/build/wasm.js
++++ b/build/wasm.js
+@@ -74,6 +74,7 @@
+   `module.exports = '${base64Wasm}'\n`
+ )
+ 
++/*
+ // Build wasm simd binary
+ execSync(`${CLANG} \
+  -nodefaultlibs \
+@@ -104,3 +105,4 @@
+   join(WASM_OUT, 'llhttp_simd-wasm.js'),
+   `module.exports = '${base64WasmSimd}'\n`
+ )
++*/
